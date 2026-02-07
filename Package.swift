@@ -1,7 +1,6 @@
 // swift-tools-version: 6.0
 
 import PackageDescription
-import CompilerPluginSupport
 
 let llamaVersion = "b6871"
 
@@ -10,7 +9,6 @@ let llamaVersion = "b6871"
 var packageDependencies: [Package.Dependency] = [
     .package(url: "https://github.com/apple/swift-argument-parser.git", .upToNextMinor(from: "1.4.0")),
     .package(url: "https://github.com/huggingface/swift-jinja", .upToNextMinor(from: "2.0.0")),
-    .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.0")
 ]
 
 #if os(iOS) || os(macOS)
@@ -46,16 +44,15 @@ var packageTargets: [Target] = [
         name: "LocalLLMClient",
         dependencies: [
             "LocalLLMClientCore",
-            "LocalLLMClientMacros"
         ]
     ),
     .testTarget(
         name: "LocalLLMClientTests",
         dependencies: ["LocalLLMClient", "LocalLLMClientTestUtilities"]
     ),
-    
+
     .target(
-        name: "LocalLLMClientCore", 
+        name: "LocalLLMClientCore",
         dependencies: [
             "LocalLLMClientUtility",
             .product(name: "Jinja", package: "swift-jinja")
@@ -65,29 +62,8 @@ var packageTargets: [Target] = [
     .target(name: "LocalLLMClientUtility"),
     .target(
         name: "LocalLLMClientTestUtilities",
-        dependencies: ["LocalLLMClientCore", "LocalLLMClientMacros"]
+        dependencies: ["LocalLLMClientCore"]
     ),
-    
-    .macro(
-        name: "LocalLLMClientMacrosPlugin",
-        dependencies: [
-            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-            .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-        ]
-    ),
-    .target(
-        name: "LocalLLMClientMacros",
-        dependencies: ["LocalLLMClientMacrosPlugin", "LocalLLMClientCore"]
-    ),
-    .testTarget(
-        name: "LocalLLMClientMacrosTests",
-        dependencies: [
-            "LocalLLMClientCore",
-            "LocalLLMClientMacros",
-            "LocalLLMClientMacrosPlugin",
-            .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-        ]
-    )
 ]
 
 #if os(iOS) || os(macOS)
