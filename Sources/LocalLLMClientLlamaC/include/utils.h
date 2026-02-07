@@ -1,17 +1,13 @@
 #pragma once
 
-// Xcode Cloud's clang dependency scanner sometimes fails to locate C++ stdlib headers.
-// Avoid including <memory> from a public header.
-// We only need std::unique_ptr as a type in declarations here.
-namespace std { template <class T, class Deleter> class unique_ptr; }
-
-#include "../common/chat.h"
-
-template<typename T, typename Deleter>
-void* get_raw_pointer_from_unique_ptr(const std::unique_ptr<T, Deleter>& ptr);
+// Keep this header free of C++ standard library dependencies.
+// Xcode Cloud's clang dependency scanning has been flaky when stdlib headers
+// are included through Swift/Clang module boundaries.
 
 struct common_chat_templates;
-common_chat_templates* get_common_chat_templates(const common_chat_templates_ptr tmpls);
+struct common_chat_templates_inputs;
+struct common_chat_params;
+struct llama_model;
 
 // Wrapper functions for Swift C++ interop
 common_chat_templates_inputs* create_chat_templates_inputs();
