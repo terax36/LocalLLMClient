@@ -1,4 +1,9 @@
-#include <memory>
+#pragma once
+
+// Xcode Cloud's clang dependency scanner sometimes fails to locate C++ stdlib headers.
+// Avoid including <memory> from a public header.
+// We only need std::unique_ptr as a type in declarations here.
+namespace std { template <class T, class Deleter> class unique_ptr; }
 
 #include "../common/chat.h"
 
