@@ -1,15 +1,7 @@
-#include <memory>
-
 #include "include/utils.h"
 
-template<typename T, typename Deleter>
-void* get_raw_pointer_from_unique_ptr(const std::unique_ptr<T, Deleter>& ptr) {
-    return static_cast<void*>(ptr.get());
-}
-
-common_chat_templates* get_common_chat_templates(const common_chat_templates_ptr tmpls) {
-    return tmpls.get();
-}
+// `common/chat.h` pulls in the required C++ std headers. Keep utils.h minimal.
+#include "common/chat.h"
 
 // Wrapper functions for Swift C++ interop
 common_chat_templates_inputs* create_chat_templates_inputs() {
