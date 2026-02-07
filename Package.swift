@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.0
 
 import PackageDescription
 import CompilerPluginSupport
@@ -135,7 +135,7 @@ packageTargets.append(contentsOf: [
             "LocalLLMClientCore",
             .product(name: "MLXLLM", package: "mlx-swift-lm"),
             .product(name: "MLXVLM", package: "mlx-swift-lm"),
-        ],
+        ]
     ),
     .testTarget(
         name: "LocalLLMClientMLXTests",
