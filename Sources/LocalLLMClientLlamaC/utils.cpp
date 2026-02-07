@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "include/utils.h"
 
 template<typename T, typename Deleter>
